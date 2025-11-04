@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Algoritmos de Planificación de CPU</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🖥️ Simulador de Algoritmos de Planificación de CPU</h1>
+       
+        <div class="controls">
+            <div class="control-group">
+                <label for="processName">Nombre del Proceso</label>
+                <input type="text" id="processName" placeholder="Ej: P1">
+            </div>
+            <div class="control-group">
+                <label for="arrivalTime">Tiempo de Llegada</label>
+                <input type="number" id="arrivalTime" min="0" value="0">
+            </div>
+            <div class="control-group">
+                <label for="burstTime">Tiempo de Ráfaga (Ejecución)</label>
+                <input type="number" id="burstTime" min="1" value="1">
+            </div>
+            <div class="control-group">
+                <label for="priority">Prioridad (menor = mayor prioridad)</label>
+                <input type="number" id="priority" min="1" value="1">
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button onclick="addProcess()">➕ Agregar Proceso</button>
+            <button class="secondary" onclick="generateRandomProcesses()">🎲 Generar Procesos Aleatorios</button>
+            <button class="danger" onclick="clearAll()">🗑️ Limpiar Todo</button>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="algorithm">Algoritmo de Planificación</label>
+                <select id="algorithm" onchange="toggleQuantum()">
+                    <option value="fcfs">FCFS (First Come First Served)</option>
+                    <option value="sjf">SJF (Shortest Job First)</option>
+                    <option value="srtf">SRTF (Shortest Remaining Time First)</option>
+                    <option value="priority">Por Prioridad (No Preemptivo)</option>
+                    <option value="priorityPreemptive">Por Prioridad (Preemptivo)</option>
+                    <option value="roundrobin">Round Robin</option>
+                </select>
+            </div>
+            <div class="control-group quantum-group" id="quantumGroup">
+                <label for="quantum">Quantum (Round Robin)</label>
+                <input type="number" id="quantum" min="1" value="2">
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button onclick="calculate()">📊 Calcular</button>
+        </div>
+
+        <div class="table-container">
+            <table id="processTable">
+                <thead>
+                    <tr>
+                        <th>Proceso</th>
+                        <th>Tiempo de Llegada</th>
+                        <th>Tiempo de Ejecución</th>
+                        <th>Prioridad</th>
+                        <th>Tiempo de Finalización</th>
+                        <th>Tiempo de Servicio (TAT)</th>
+                        <th>Tiempo de Espera</th>
+                        <th>Índice de Servicio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="processTableBody">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="gantt-container">
+            <div class="gantt-title">📈 Diagrama de Gantt</div>
+            <div id="ganttChart"></div>
+        </div>
+
+        <div class="stats" id="stats" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-value" id="avgTAT">0</div>
+                <div class="stat-label">Tiempo Promedio de Servicio</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avgWT">0</div>
+                <div class="stat-label">Tiempo Promedio de Espera</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avgSI">0</div>
+                <div class="stat-label">Índice de Servicio Promedio</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="cpuUtil">0%</div>
+                <div class="stat-label">Utilización de CPU</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
